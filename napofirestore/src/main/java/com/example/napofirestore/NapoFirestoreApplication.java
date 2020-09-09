@@ -35,6 +35,8 @@ public class NapoFirestoreApplication {
         servlet.setThrowExceptionIfNoHandlerFound(true);
         final String CYAN_BOLD = "\033[1;36m";
         final String YELLOW = "\033[0;33m";
+
+
         return args -> {
             String napo = "\n" +
                     "    _ _ __                 - opannapo -                __ _ _    \n" +
@@ -48,7 +50,7 @@ public class NapoFirestoreApplication {
             System.out.println(YELLOW + " * Service Running On (Env) :: " + profile);
             System.out.println(YELLOW + " * DataSource :: " + dataSource);
             System.out.println(YELLOW + " * App JwtKey ::" + appConfig.getJwtKey());
-            System.out.println(YELLOW + " * App xAppSignature:: " + appConfig.getxAppSignature());
+            System.out.println(YELLOW + " * App X-App Signature :: " + appConfig.getxAppSignature());
         };
     }
 }
