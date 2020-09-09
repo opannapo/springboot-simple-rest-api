@@ -1,8 +1,7 @@
 package com.example.napofirestore.api.interceptor;
 
-import com.example.napofirestore.api.common.constants.Attr;
+import com.example.napofirestore.api.common.config.AppConfig;
 import com.example.napofirestore.api.common.exceptions.HeaderRequestException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -12,25 +11,25 @@ import javax.servlet.http.HttpServletResponse;
 
 @Component
 public class HeaderXAppInterceptor extends HandlerInterceptorAdapter {
-    @Autowired
-    Attr attr;
+    private final AppConfig appConfig;
+
+    public HeaderXAppInterceptor(AppConfig appConfig) {
+        this.appConfig = appConfig;
+    }
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         long startTime = System.currentTimeMillis();
         request.setAttribute("startTime", startTime);
-        System.out.println("\nHeaderXAppInterceptor.preHandle::" + request.getRequestURL());
 
         String header = request.getHeader("X-App");
-        System.out.println("\nXAppInterceptor.header::" + header);
-
         if (header == null || header.isEmpty()) {
             throw new HeaderRequestException("Empty X-App Header");
         }
 
         String headerXapp = request.getHeader("X-App").toLowerCase();
-        if (headerXapp.equals(attr.getxAppSignature())) {
-            throw new HeaderRequestException("Invalid X-App Header " + headerXapp);
+        if (!headerXapp.equals(appConfig.getxAppSignature())) {
+            throw new HeaderRequestException("Invalid X-App Header " + headerXapp + " ,signature is " + appConfig.getxAppSignature());
         }
 
         return true;

@@ -1,6 +1,6 @@
 package com.example.napofirestore;
 
-import com.example.napofirestore.api.common.constants.Attr;
+import com.example.napofirestore.api.common.config.AppConfig;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -19,11 +19,11 @@ public class NapoFirestoreApplication {
     String dataSource;
 
     private final DispatcherServlet servlet;
-    private final Attr attr;
+    private final AppConfig appConfig;
 
-    public NapoFirestoreApplication(DispatcherServlet servlet, Attr attr) {
+    public NapoFirestoreApplication(DispatcherServlet servlet, AppConfig appConfig) {
         this.servlet = servlet;
-        this.attr = attr;
+        this.appConfig = appConfig;
     }
 
     public static void main(String[] args) {
@@ -47,8 +47,8 @@ public class NapoFirestoreApplication {
             System.out.println(CYAN_BOLD + napo + "\n");
             System.out.println(YELLOW + " * Service Running On (Env) :: " + profile);
             System.out.println(YELLOW + " * DataSource :: " + dataSource);
-            System.out.println(YELLOW + " * App JwtKey ::" + attr.getJwtKey());
-            System.out.println(YELLOW + " * App xAppSignature:: " + attr.getxAppSignature());
+            System.out.println(YELLOW + " * App JwtKey ::" + appConfig.getJwtKey());
+            System.out.println(YELLOW + " * App xAppSignature:: " + appConfig.getxAppSignature());
         };
     }
 }

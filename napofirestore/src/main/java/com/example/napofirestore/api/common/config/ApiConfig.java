@@ -2,16 +2,17 @@ package com.example.napofirestore.api.common.config;
 
 import com.example.napofirestore.api.common.constants.Url;
 import com.example.napofirestore.api.interceptor.HeaderXAppInterceptor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class ApiConfig implements WebMvcConfigurer {
-    @Autowired
-    private HeaderXAppInterceptor headerXAppInterceptor;
+    private final HeaderXAppInterceptor headerXAppInterceptor;
 
+    public ApiConfig(HeaderXAppInterceptor headerXAppInterceptor) {
+        this.headerXAppInterceptor = headerXAppInterceptor;
+    }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -24,6 +25,4 @@ public class ApiConfig implements WebMvcConfigurer {
                 Url.User.UPDATE
         );
     }
-
-
 }
