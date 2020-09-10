@@ -19,9 +19,7 @@ public class HeaderXAppInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        long startTime = System.currentTimeMillis();
-        request.setAttribute("startTime", startTime);
-
+        request.setAttribute("startTime", System.currentTimeMillis());
         String header = request.getHeader("X-App");
         if (header == null || header.isEmpty()) {
             throw new HeaderRequestException("Empty X-App Header");

@@ -52,9 +52,6 @@ public class JWTInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
-        long startTime = (Long) request.getAttribute("startTime");
-        long endTime = System.currentTimeMillis();
-        long takenTime = (endTime - startTime);
-        System.out.println("\nJWTInterceptor.afterCompletion::" + request.getRequestURL() + ":: " + takenTime + "ms");
+        System.out.println("\nJWTInterceptor.afterCompletion::" + request.getRequestURL());
     }
 }
