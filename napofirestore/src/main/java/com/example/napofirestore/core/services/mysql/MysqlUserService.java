@@ -17,7 +17,7 @@ public class MysqlUserService implements UserService {
 
     @Override
     public Page<UserEntity> getAll(int page, int limit) {
-        return userRepository.findAll(PageRequest.of(page, limit));
+        return userRepository.findAll(PageRequest.of(page - 1, limit));
     }
 
     @Override
