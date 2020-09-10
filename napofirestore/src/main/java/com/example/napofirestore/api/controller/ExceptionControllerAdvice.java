@@ -1,6 +1,7 @@
 package com.example.napofirestore.api.controller;
 
 import com.example.napofirestore.api.common.exceptions.HeaderRequestException;
+import com.example.napofirestore.api.common.exceptions.JWTAuthException;
 import com.example.napofirestore.api.templates.response.Res;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,11 @@ public class ExceptionControllerAdvice extends BaseRestController {
         return generateErrorResponse(ex.getMessage(), HttpStatus.BAD_REQUEST.value());
     }
 
+    @ExceptionHandler(value = {JWTAuthException.class})
+    protected ResponseEntity<Res> jwtAuthException(JWTAuthException ex) {
+        return generateErrorResponse(ex.getMessage(), HttpStatus.UNAUTHORIZED.value());
+    }
+
     @ExceptionHandler(value = {HttpRequestMethodNotSupportedException.class})
     protected ResponseEntity<Res> httpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException ex) {
         return generateErrorResponse(ex.getMessage(), HttpStatus.METHOD_NOT_ALLOWED.value());
@@ -37,6 +43,10 @@ public class ExceptionControllerAdvice extends BaseRestController {
         return generateErrorResponse(msg, HttpStatus.BAD_REQUEST.value());
     }
 
+    @ExceptionHandler(value = {Exception.class})
+    protected ResponseEntity<Res> generalExceptionHandler(Exception ex) {
+        return generateErrorResponse(ex.getMessage(), HttpStatus.BAD_REQUEST.value());
+    }
 
     private ResponseEntity<Res> generateErrorResponse(String msg, int internalCode) {
         Res res = outFail(internalCode, msg);

@@ -33,18 +33,21 @@ public class JWTInterceptor extends HandlerInterceptorAdapter {
             throw new JWTAuthException("Invalid Authorization Header " + Arrays.toString(headerAuthorization));
 
         String jwtIn = headerAuthorization[1];
-        Jws<Claims> jws = Jwts.parserBuilder()
-                .setSigningKey(appConfig.getJwtKey())
-                .build()
-                .parseClaimsJws(jwtIn);
-
-        throw new JWTAuthException("RESULT JWS from :: " + jwtIn + " is :: " + jws);
-        //return true;
+        try {
+            Jws<Claims> claims = Jwts.parserBuilder()
+                    .setSigningKey(appConfig.getJwtKey().getBytes())
+                    .build()
+                    .parseClaimsJws(jwtIn);
+            request.setAttribute("token-body", claims.getBody());
+            return true;
+        } catch (Exception e) {
+            throw new JWTAuthException("RESULT JWS ERR from :: " + jwtIn + " err " + e.getMessage() + " key " + appConfig.getJwtKey());
+        }
     }
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
-        System.out.println("\nHeaderXAppInterceptor.postHandle::" + request.getRequestURL());
+        System.out.println("\nJWTInterceptor.postHandle::" + request.getRequestURL());
     }
 
     @Override
@@ -52,6 +55,6 @@ public class JWTInterceptor extends HandlerInterceptorAdapter {
         long startTime = (Long) request.getAttribute("startTime");
         long endTime = System.currentTimeMillis();
         long takenTime = (endTime - startTime);
-        System.out.println("\nHeaderXAppInterceptor.afterCompletion::" + request.getRequestURL() + ":: " + takenTime + "ms");
+        System.out.println("\nJWTInterceptor.afterCompletion::" + request.getRequestURL() + ":: " + takenTime + "ms");
     }
 }
