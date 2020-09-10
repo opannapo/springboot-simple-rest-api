@@ -50,7 +50,7 @@ public class NapoFirestoreApplication {
             System.out.println(YELLOW + " * Service Running On (Env) :: " + profile);
             System.out.println(YELLOW + " * DataSource :: " + dataSource);
             System.out.println(YELLOW + " * App JwtKey ::" + appConfig.getJwtKey());
-            System.out.println(YELLOW + " * App X-App Signature :: " + appConfig.getxAppSignature());
+            System.out.println(YELLOW + " * App X-App Signature :: " + appConfig.getXAppSignature());
         };
     }
 }

@@ -28,8 +28,8 @@ public class HeaderXAppInterceptor extends HandlerInterceptorAdapter {
         }
 
         String headerXapp = request.getHeader("X-App").toLowerCase();
-        if (!headerXapp.equals(appConfig.getxAppSignature())) {
-            throw new HeaderRequestException("Invalid X-App Header " + headerXapp + " ,signature is " + appConfig.getxAppSignature());
+        if (!headerXapp.equals(appConfig.getXAppSignature())) {
+            throw new HeaderRequestException("Invalid X-App Header " + headerXapp + " ,signature is " + appConfig.getXAppSignature());
         }
 
         return true;
