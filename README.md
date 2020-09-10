@@ -4,7 +4,7 @@ Springboot Sample Project (Rest)
 
 | Implementations |
 | ------ |
-| Project Structure |
+| <b>Project Structure</b> » Project Layering |
 | Base Template » Response , Request Param , etc | 
 | Base Template » Response , Request Param , etc | 
 | Configuration Component » Register Interceptor Patterns | 
