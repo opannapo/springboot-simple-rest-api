@@ -1,24 +1,14 @@
 package com.example.napofirestore.api.templates.response;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.List;
 
-public class ResDataArray {
+@Setter
+@Getter
+class ResDataArray {
     private List list;
     private Pagination paging;
 
-    public Pagination getPaging() {
-        return paging;
-    }
-
-    public void setPaging(Pagination paging) {
-        this.paging = paging;
-    }
-
-    public List getList() {
-        return list;
-    }
-
-    public void setList(List list) {
-        this.list = list;
-    }
 }
