@@ -41,7 +41,7 @@ public class JWTInterceptor extends HandlerInterceptorAdapter {
             request.setAttribute("token-body", claims.getBody());
             return true;
         } catch (Exception e) {
-            throw new JWTAuthException("RESULT JWS ERR from :: " + jwtIn + " err " + e.getMessage() + " key " + appConfig.getJwtKey());
+            throw new JWTAuthException(e.getMessage() + " :: " + jwtIn);
         }
     }
 
