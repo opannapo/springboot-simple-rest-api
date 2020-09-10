@@ -1,6 +1,8 @@
 package com.example.napofirestore.api.templates.response;
 
 import com.example.napofirestore.api.common.exceptions.NoResultException;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -10,21 +12,16 @@ import java.util.Optional;
 
 @ResponseStatus(value = HttpStatus.OK)
 public class Res {
+    @Getter
     private Object data;
+
+    @Setter
+    @Getter
     private boolean isSuccess;
+
+    @Setter
+    @Getter
     private ResError error;
-
-    public boolean isSuccess() {
-        return isSuccess;
-    }
-
-    public void setSuccess(boolean success) {
-        isSuccess = success;
-    }
-
-    public Object getData() {
-        return data;
-    }
 
     public void setData(Object data, int page, int limit) {
         System.out.print("LOG DATA -> " + data);
@@ -63,14 +60,6 @@ public class Res {
         } else {
             this.data = data;
         }
-    }
-
-    public ResError getError() {
-        return error;
-    }
-
-    public void setError(ResError error) {
-        this.error = error;
     }
 
 }
