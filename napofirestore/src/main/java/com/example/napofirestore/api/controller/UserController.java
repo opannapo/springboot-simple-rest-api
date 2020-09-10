@@ -7,11 +7,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Optional;
 
 @RestController
 public class UserController extends BaseRestController {
     @GetMapping(Url.User.USERS)
-    public Res getUsers(HttpServletRequest request, @RequestParam int page, @RequestParam int limit) {
-        return outOk("oke");
+    public Res getUsers(HttpServletRequest request, @RequestParam(required = false) Optional<Integer> page, @RequestParam(required = false) Optional<Integer> limit) {
+        return outOk(request.getAttribute("token-body"));
     }
+
 }
