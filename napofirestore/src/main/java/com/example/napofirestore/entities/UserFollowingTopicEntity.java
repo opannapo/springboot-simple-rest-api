@@ -1,57 +1,38 @@
 package com.example.napofirestore.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
-@Table(name = "user_following_topic", schema = "napo-firestore", catalog = "")
+@Table(name = "user_following_topic", schema = "napo-firestore")
+@EqualsAndHashCode
+@ToString
+@Setter
+@Getter
 public class UserFollowingTopicEntity {
-    private int id;
-    private Integer userId;
-    private Integer topicTypeId;
-
     @Id
     @Column(name = "id")
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+    private int id;
 
     @Basic
     @Column(name = "user_id")
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
+    private Integer userId;
 
     @Basic
     @Column(name = "topic_type_id")
-    public Integer getTopicTypeId() {
-        return topicTypeId;
-    }
+    private Integer topicTypeId;
 
-    public void setTopicTypeId(Integer topicTypeId) {
-        this.topicTypeId = topicTypeId;
-    }
+    @ManyToOne
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    @JsonIgnoreProperties({"userFollowingTopics"})
+    private UserEntity user;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        UserFollowingTopicEntity that = (UserFollowingTopicEntity) o;
-        return id == that.id &&
-                Objects.equals(userId, that.userId) &&
-                Objects.equals(topicTypeId, that.topicTypeId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, userId, topicTypeId);
-    }
+    @OneToOne
+    @JoinColumn(name = "topic_type_id", insertable = false, updatable = false)
+    private TopicTypeEntity topicType;
 }

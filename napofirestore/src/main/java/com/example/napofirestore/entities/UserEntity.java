@@ -1,11 +1,13 @@
 package com.example.napofirestore.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "user", schema = "napo-firestore")
@@ -41,4 +43,9 @@ public class UserEntity {
     @Basic
     @Column(name = "email")
     private String email;
+
+    @OneToMany(targetEntity = UserFollowingTopicEntity.class, mappedBy = "user")
+    @JsonIgnoreProperties({"user"})
+    private List<UserFollowingTopicEntity> userFollowingTopics;
+
 }
