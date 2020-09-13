@@ -16,6 +16,7 @@ Springboot Sample Project (Rest)
 | JWT| » |Json Web Token | 
 | Controller Advice| » |Exception Handler with custom error format | 
 | Interceptor| » |Intercept PreRequest (Token Validation , Header Validation , etc )  | 
+| JsonView | » | Relational Query Limited & Filter Response Mapping | 
 
 
 
