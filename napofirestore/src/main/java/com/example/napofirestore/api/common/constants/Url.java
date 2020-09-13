@@ -9,6 +9,7 @@ public class Url {
 
     public static final class User {
         public static final String USER = BASE_URL + "/user";
+        public static final String USER_ME = BASE_URL + "/user/me";
         public static final String ADD = BASE_URL + "/user/add";
         public static final String UPDATE = BASE_URL + "/user/update";
         public static final String DELETE = BASE_URL + "/user/delete";

@@ -56,6 +56,7 @@ public class UserEntity {
 
     @OneToMany(targetEntity = UserFollowingTopicEntity.class, mappedBy = "user")
     @JsonIgnoreProperties({"user"})
+    @JsonView(View.Owner.class)
     private List<UserFollowingTopicEntity> userFollowingTopics;
 
     @OneToOne(mappedBy = "user")

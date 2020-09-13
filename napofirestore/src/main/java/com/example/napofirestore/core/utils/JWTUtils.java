@@ -16,6 +16,7 @@ public class JWTUtils {
 
     public void validateToken(String jtwToken, ValidateCallback callback) {
         try {
+            System.out.println("jtwToken " + jtwToken);
             Jws<Claims> claim = Jwts.parserBuilder()
                     .setSigningKey(appConfig.getJwtKey().getBytes())
                     .build()
@@ -26,7 +27,6 @@ public class JWTUtils {
             callback.onValidateResult(null, ex);
         }
     }
-
 
 
     public interface ValidateCallback {

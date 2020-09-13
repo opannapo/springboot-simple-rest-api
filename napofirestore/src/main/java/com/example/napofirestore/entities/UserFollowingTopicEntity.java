@@ -16,7 +16,7 @@ import javax.persistence.*;
 @ToString
 @Setter
 @Getter
-@JsonView(View.All.class)
+@JsonView({View.All.class, View.Owner.class,})
 public class UserFollowingTopicEntity {
     @Id
     @Column(name = "id")

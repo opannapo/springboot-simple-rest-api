@@ -29,7 +29,7 @@ public class ApiConfig implements WebMvcConfigurer {
         );
         registry.addInterceptor(jwtInterceptor).addPathPatterns(
                 Url.User.USERS,
-                Url.User.USER
+                Url.User.USER_ME
         );
     }
 }
