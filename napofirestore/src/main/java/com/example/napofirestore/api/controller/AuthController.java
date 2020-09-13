@@ -13,8 +13,10 @@ import javax.validation.Valid;
 @RestController
 public class AuthController extends BaseRestController {
 
+
     @PostMapping(Url.Auth.AUTH)
-    public Res welcomeTest(HttpServletRequest request, @Valid @RequestBody AuthRequestParam param) {
+    public Res auth(HttpServletRequest request, @Valid @RequestBody AuthRequestParam param) {
         return outOk(param);
     }
+
 }

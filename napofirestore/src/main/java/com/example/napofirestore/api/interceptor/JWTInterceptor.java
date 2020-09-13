@@ -2,9 +2,7 @@ package com.example.napofirestore.api.interceptor;
 
 import com.example.napofirestore.api.common.config.AppConfig;
 import com.example.napofirestore.api.common.exceptions.JWTAuthException;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
+import com.example.napofirestore.core.utils.JWTUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -15,10 +13,10 @@ import java.util.Arrays;
 
 @Component
 public class JWTInterceptor extends HandlerInterceptorAdapter {
-    private final AppConfig appConfig;
+    private final JWTUtils jwtUtils;
 
-    public JWTInterceptor(AppConfig appConfig) {
-        this.appConfig = appConfig;
+    public JWTInterceptor(AppConfig appConfig, JWTUtils jwtUtils) {
+        this.jwtUtils = jwtUtils;
     }
 
     @Override
@@ -33,16 +31,15 @@ public class JWTInterceptor extends HandlerInterceptorAdapter {
             throw new JWTAuthException("Invalid Authorization Header " + Arrays.toString(headerAuthorization));
 
         String jwtIn = headerAuthorization[1];
-        try {
-            Jws<Claims> claims = Jwts.parserBuilder()
-                    .setSigningKey(appConfig.getJwtKey().getBytes())
-                    .build()
-                    .parseClaimsJws(jwtIn);
-            request.setAttribute("token-body", claims.getBody());
-            return true;
-        } catch (Exception e) {
-            throw new JWTAuthException(e.getMessage() + " :: " + jwtIn);
-        }
+        jwtUtils.validateToken(jwtIn, (claims, ex) -> {
+            if (ex == null) {
+                request.setAttribute("token-body", claims.getBody());
+            } else {
+                throw new JWTAuthException(ex.getMessage() + " :: " + jwtIn);
+            }
+        });
+
+        return true;
     }
 
     @Override

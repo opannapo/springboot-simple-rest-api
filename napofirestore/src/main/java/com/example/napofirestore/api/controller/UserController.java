@@ -2,8 +2,11 @@ package com.example.napofirestore.api.controller;
 
 import com.example.napofirestore.api.common.constants.Url;
 import com.example.napofirestore.api.templates.response.Res;
+import com.example.napofirestore.api.templates.response.View;
 import com.example.napofirestore.core.services.UserService;
 import com.example.napofirestore.core.services.mysql.MysqlUserService;
+import com.example.napofirestore.entities.UserEntity;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,6 +28,21 @@ public class UserController extends BaseRestController {
                         @RequestParam(required = false, defaultValue = "1") Optional<Integer> page,
                         @RequestParam(required = false, defaultValue = "20") Optional<Integer> limit) {
         Page result = mysqlUserService.getAll(page.get(), limit.get());
+        return outOk(result);
+    }
+
+    @GetMapping(Url.User.USER)
+    @JsonView({View.Public.class})
+    public Res getUser(HttpServletRequest request, @RequestParam int id) {
+        UserEntity result = mysqlUserService.getOne(id);
+        System.out.println("token-body :: " + request.getAttribute("token-body"));
+        return outOk(result);
+    }
+
+    //@GetMapping(Url.User.USER)
+    @JsonView({View.Owner.class})
+    public Res getUserAsOwner(HttpServletRequest request, @RequestParam int id) {
+        UserEntity result = mysqlUserService.getOne(id);
         return outOk(result);
     }
 }

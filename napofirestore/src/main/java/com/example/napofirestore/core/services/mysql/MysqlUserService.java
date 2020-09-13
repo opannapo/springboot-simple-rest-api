@@ -16,12 +16,12 @@ public class MysqlUserService implements UserService {
     }
 
     @Override
-    public Page<UserEntity> getAll(int page, int limit) {
+    public Page getAll(int page, int limit) {
         return userRepository.findAll(PageRequest.of(page - 1, limit));
     }
 
     @Override
     public UserEntity getOne(int userId) {
-        return null;
+        return userRepository.findById(userId).get();
     }
 }

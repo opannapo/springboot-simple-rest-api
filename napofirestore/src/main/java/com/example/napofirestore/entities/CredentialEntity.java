@@ -1,81 +1,45 @@
 package com.example.napofirestore.entities;
 
+import com.example.napofirestore.api.templates.response.View;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonView;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
-@Table(name = "credential", schema = "napo-firestore", catalog = "")
+@Table(name = "credential", schema = "napo-firestore")
+@Setter
+@Getter
+@ToString
+@EqualsAndHashCode
+@JsonView(View.All.class)
 public class CredentialEntity {
-    private int id;
-    private String key;
-    private String signature;
-    private int type;
-    private int userId;
-
     @Id
     @Column(name = "id")
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+    private int id;
 
     @Basic
     @Column(name = "key")
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
-    }
+    private String key;
 
     @Basic
     @Column(name = "signature")
-    public String getSignature() {
-        return signature;
-    }
-
-    public void setSignature(String signature) {
-        this.signature = signature;
-    }
+    private String signature;
 
     @Basic
     @Column(name = "type")
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
+    private int type;
 
     @Basic
     @Column(name = "user_id")
-    public int getUserId() {
-        return userId;
-    }
+    private int userId;
 
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CredentialEntity that = (CredentialEntity) o;
-        return id == that.id &&
-                type == that.type &&
-                userId == that.userId &&
-                Objects.equals(key, that.key) &&
-                Objects.equals(signature, that.signature);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, key, signature, type, userId);
-    }
+    @OneToOne
+    @JoinColumn(updatable = false, insertable = false, name = "user_id")
+    @JsonIgnoreProperties({"credential"})
+    private UserEntity user;
 }

@@ -1,6 +1,7 @@
 package com.example.napofirestore.api.templates.response;
 
 import com.example.napofirestore.api.common.exceptions.NoResultException;
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.domain.Page;
@@ -13,18 +14,20 @@ import java.util.Optional;
 @ResponseStatus(value = HttpStatus.OK)
 public class Res {
     @Getter
+    @JsonView(View.BaseResponse.class)
     private Object data;
 
     @Setter
     @Getter
+    @JsonView(View.BaseResponse.class)
     private boolean isSuccess;
 
     @Setter
     @Getter
+    @JsonView(View.BaseResponse.class)
     private ResError error;
 
     public void setData(Object data, int page, int limit) {
-        System.out.print("LOG DATA -> " + data);
         if (data == null || data.equals(Optional.empty())) {
             throw new NoResultException("Content Not Found");
         }

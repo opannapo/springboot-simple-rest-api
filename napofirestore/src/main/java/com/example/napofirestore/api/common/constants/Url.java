@@ -14,4 +14,5 @@ public class Url {
         public static final String DELETE = BASE_URL + "/user/delete";
         public static final String USERS = BASE_URL + "/users";
     }
+
 }
