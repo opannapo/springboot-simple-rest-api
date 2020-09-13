@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Optional;
 
 @RestController
 public class UserController extends BaseRestController {
@@ -27,10 +26,11 @@ public class UserController extends BaseRestController {
     }
 
     @GetMapping(Url.User.USERS)
+    @JsonView({View.Public.class})
     public Res getUsers(HttpServletRequest request,
-                        @RequestParam(required = false, defaultValue = "1") Optional<Integer> page,
-                        @RequestParam(required = false, defaultValue = "20") Optional<Integer> limit) {
-        Page result = mysqlUserService.getAll(page.get(), limit.get());
+                        @RequestParam(required = false, defaultValue = "1") int page,
+                        @RequestParam(required = false, defaultValue = "20") int limit) {
+        Page<UserEntity> result = mysqlUserService.getAll(page, limit);
         return outOk(result);
     }
 

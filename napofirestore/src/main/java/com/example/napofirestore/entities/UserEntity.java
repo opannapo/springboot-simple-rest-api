@@ -59,10 +59,11 @@ public class UserEntity {
     @JsonView(View.Owner.class)
     private List<UserFollowingTopicEntity> userFollowingTopics;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     @JsonIgnoreProperties({"user"})
     private CredentialEntity credential;
 
     @Transient
+    @JsonView(View.AuthDefault.class)
     private String token;
 }

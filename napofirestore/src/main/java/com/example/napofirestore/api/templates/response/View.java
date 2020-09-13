@@ -12,4 +12,7 @@ public class View {
 
     public interface Owner extends BaseResponse, Public {
     }
+
+    public interface AuthDefault extends BaseResponse {
+    }
 }

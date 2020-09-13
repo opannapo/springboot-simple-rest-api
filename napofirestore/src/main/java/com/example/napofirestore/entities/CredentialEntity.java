@@ -32,14 +32,20 @@ public class CredentialEntity {
 
     @Basic
     @Column(name = "type")
+    @JsonView(View.AuthDefault.class)
     private int type;
 
     @Basic
     @Column(name = "user_id")
+    @JsonView(View.AuthDefault.class)
     private int userId;
 
-    @OneToOne
+    @OneToOne(orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(updatable = false, insertable = false, name = "user_id")
     @JsonIgnoreProperties({"credential"})
     private UserEntity user;
+
+    @Transient
+    @JsonView(View.AuthDefault.class)
+    String token;
 }
